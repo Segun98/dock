@@ -1,6 +1,7 @@
 import { Box, Spinner, Image, Flex } from "@chakra-ui/react";
 import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Iresult } from ".";
 import { API, IMAGE_HOST } from "../utils";
 
@@ -39,6 +40,12 @@ export const Movie = ({ match }: IMovie) => {
 
   return (
     <Box mt={5}>
+      <Box textAlign="center" my={5}>
+        <Link to="/" style={{ textDecoration: "underline", color: "blue" }}>
+          Go Home
+        </Link>
+      </Box>
+
       {loading && (
         <Box mt="160px" textAlign="center">
           <Spinner />
