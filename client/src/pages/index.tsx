@@ -1,3 +1,4 @@
+import { Box } from "@chakra-ui/react";
 import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import { MovieList } from "../components/MovieList";
@@ -19,7 +20,7 @@ export interface Iresult {
   video: false;
   vote_average: number;
 }
-interface Idata {
+export interface Idata {
   results: Array<Iresult>;
 }
 
@@ -48,6 +49,14 @@ export const Home = () => {
 
   return (
     <div>
+      <Box
+        textAlign="center"
+        fontWeight="bold"
+        my={5}
+        fontSize={["0.9rem", "1rem", "2rem"]}
+      >
+        Popular Movies
+      </Box>
       <Search setMovies={setMovies} />
       <MovieList movies={movies} loading={loading} />
     </div>
