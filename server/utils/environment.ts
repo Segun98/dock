@@ -3,3 +3,4 @@ export const host: string =
 
 export const API: string = `https://api.themoviedb.org/3/movie/popular`;
 export const SEARCH_API: string = `https://api.themoviedb.org/3/search/movie`;
+export const A_MOVIE: string = `https://api.themoviedb.org/3/movie`;
