@@ -3,7 +3,6 @@ import React from "react";
 import { Iresult } from "../pages";
 import { IMAGE_HOST } from "../utils";
 import { Link } from "react-router-dom";
-import slug from "slug";
 interface IMovieList {
   movies: Array<Iresult>;
   loading: boolean;
@@ -40,7 +39,7 @@ export const MovieList: React.FC<IMovieList> = ({ loading, movies }) => {
               <Box textAlign="center" wordBreak="break-word" width="100%">
                 <h1>{m.title}</h1>
                 <Link
-                  to={`/movie/${slug(m.title)}`}
+                  to={`/movie/${m.id}`}
                   style={{ textDecoration: "underline", color: "blue" }}
                 >
                   More
