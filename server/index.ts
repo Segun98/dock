@@ -1,5 +1,5 @@
 import { host } from "./utils/environment";
-import express, { Application, Request, Response } from "express";
+import express, { Application } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import movies from "./Routes/movies";
