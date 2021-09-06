@@ -9,6 +9,7 @@ export interface Iresult {
   adult: boolean;
   backdrop_path: string;
   genre_ids: Array<number>;
+  genres: Array<{ id: number; name: string }>;
   id: number;
   original_language: string;
   original_title: string;
