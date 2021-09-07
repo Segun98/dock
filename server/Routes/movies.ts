@@ -30,19 +30,6 @@ router.get("/search/movies", async (req: Request, res: Response) => {
   }
 });
 
-router.get("/search/movies", async (req: Request, res: Response) => {
-  try {
-    if (!req.query?.query) throw new Error("search query can't be empty");
-
-    const data = await axios.get(SEARCH_API, {
-      params: { api_key: process.env.API_KEY, query: req.query.query },
-    });
-    return res.status(200).send(data.data);
-  } catch (error: any) {
-    res.send(error.message);
-  }
-});
-
 router.get("/movie/:movieId", async (req: Request, res: Response) => {
   try {
     if (!req.params?.movieId) throw new Error("movie id is required");
