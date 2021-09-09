@@ -2,13 +2,14 @@ import { API, A_MOVIE, SEARCH_API } from "./../utils/environment";
 import { Request, Response } from "express";
 import express from "express";
 const router = express.Router();
-
+import Redis from "ioredis";
+const redis = new Redis();
 import axios from "axios";
 
 router.get("/movie/popular", async (req: Request, res: Response) => {
   try {
     const data = await axios.get(API, {
-      params: { api_key: process.env.API_KEY },
+      params: { api_key: process.env.API_KEY, page: req.query.page },
     });
 
     return res.status(200).json(data.data);
@@ -21,9 +22,29 @@ router.get("/search/movies", async (req: Request, res: Response) => {
   try {
     if (!req.query?.query) throw new Error("search query can't be empty");
 
-    const data = await axios.get(SEARCH_API, {
-      params: { api_key: process.env.API_KEY, query: req.query.query },
+    if (await redis.exists(`${String(req.query.query)} - ${req.query.page}`)) {
+      const movies = await redis.get(
+        `${String(req.query.query)} - ${req.query.page}`
+      );
+
+      return res.status(200).send(JSON.parse(movies as string));
+    }
+
+    const data: any = await axios.get(SEARCH_API, {
+      params: {
+        api_key: process.env.API_KEY,
+        query: req.query.query,
+        page: req.query.page,
+      },
     });
+
+    await redis.set(
+      `${String(req.query.query)} - ${req.query.page}`,
+      JSON.stringify(data.data),
+      "ex",
+      30
+    );
+
     return res.status(200).send(data.data);
   } catch (error: any) {
     res.send(error.message);
