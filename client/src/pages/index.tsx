@@ -36,6 +36,7 @@ export const Home = () => {
 
   useEffect(() => {
     getMovies();
+    // eslint-disable-next-line
   }, []);
 
   const getMovies = async () => {

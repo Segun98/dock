@@ -1,17 +1,9 @@
-import { Box, Spinner, Image, Flex, Button } from "@chakra-ui/react";
+import { Box, Spinner, Image, Flex } from "@chakra-ui/react";
 import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Iresult } from ".";
 import { API, IMAGE_HOST } from "../utils";
-
-interface IMovie {
-  match: {
-    params: {
-      id: string;
-    };
-  };
-}
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);

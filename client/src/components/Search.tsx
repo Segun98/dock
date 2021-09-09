@@ -42,6 +42,7 @@ export const Search: React.FC<ISearch> = ({ setMovies, page }) => {
       });
   }
 
+  // eslint-disable-next-line
   const handleSearch = useCallback(_.debounce(searchMovies, 500), [page]);
 
   return (
