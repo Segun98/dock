@@ -1,7 +1,7 @@
-import { Box, Spinner, Image, Flex } from "@chakra-ui/react";
+import { Box, Spinner, Image, Flex, Button } from "@chakra-ui/react";
 import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Iresult } from ".";
 import { API, IMAGE_HOST } from "../utils";
 
@@ -12,9 +12,16 @@ interface IMovie {
     };
   };
 }
-export const Movie = ({ match }: IMovie) => {
+
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
+export const Movie = () => {
   const [movie, setMovie] = useState<Iresult>();
   const [loading, setLoading] = useState<boolean>(false);
+
+  let query = useQuery();
 
   useEffect(() => {
     getMovie();
@@ -26,7 +33,7 @@ export const Movie = ({ match }: IMovie) => {
       setLoading(true);
 
       const res: AxiosResponse<Iresult> = await axios.get(
-        `${API}/movie/${parseInt(match.params.id)}`
+        `${API}/movie/${parseInt(query.get("id") as string)}}`
       );
       setMovie(res.data);
 
