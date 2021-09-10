@@ -49,7 +49,7 @@ export const Home = () => {
 
       setTotalPages(res.data.total_pages);
 
-      setMovies(res.data.results);
+      setMovies(res.data.results || []);
 
       setLoading(false);
     } catch (error: any) {

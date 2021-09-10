@@ -27,7 +27,7 @@ export const MovieList: React.FC<IMovieList> = ({ loading, movies }) => {
 
       <Flex wrap="wrap">
         {!loading &&
-          movies &&
+          movies.length > 0 &&
           movies.map((m) => (
             <Box key={m.id} m={2}>
               <img
