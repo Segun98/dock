@@ -22,12 +22,13 @@ router.get("/search/movies", async (req: Request, res: Response) => {
   try {
     if (!req.query?.query) throw new Error("search query can't be empty");
 
-    if (await redis.exists(`${String(req.query.query)} - ${req.query.page}`)) {
-      const movies = await redis.get(
-        `${String(req.query.query)} - ${req.query.page}`
-      );
+    //formerly redis.exists
+    let checkIfQueryExists = await redis.get(
+      `${String(req.query.query)} - ${req.query.page}`
+    );
 
-      return res.status(200).send(JSON.parse(movies as string));
+    if (checkIfQueryExists) {
+      return res.status(200).send(JSON.parse(checkIfQueryExists as string));
     }
 
     const data: any = await axios.get(SEARCH_API, {
@@ -42,7 +43,7 @@ router.get("/search/movies", async (req: Request, res: Response) => {
       `${String(req.query.query)} - ${req.query.page}`,
       JSON.stringify(data.data),
       "ex",
-      30
+      60
     );
 
     return res.status(200).send(data.data);
